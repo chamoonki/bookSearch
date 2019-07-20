@@ -1,0 +1,8 @@
+body {
+	padding-bottom: 40px;
+}
+
+body.login {
+	padding-top: 40px;
+	background-color: #feeb34;
+}
