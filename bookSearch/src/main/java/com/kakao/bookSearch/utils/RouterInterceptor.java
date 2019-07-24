@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kakao.bookSearch.controller.IndexController;
+import com.kakao.bookSearch.controller.BooksController;
 
 /**
  * login 여부를 확인 하기 위한 router interceptor
@@ -31,14 +31,18 @@ public class RouterInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession(false);
 
 		// session 의 값이 있을 경우
-		if(session.getAttribute("account") != null) {			
+		//if(request.getSession(false) != null && session.getAttribute("account") != null) {			
+		if(request.getSession(false) != null && session.getAttribute("account") != null) {
 			System.out.println("@@@@@@@@@@@ = session 확인 + " + session.getAttribute("account"));				
 			// Account를 확인 한다.
 			//return true;
 			
 		}else {
+			System.out.println("@@@@@@@@@@@ = session 없음 ");			
 			// login Page로 돌려 준다.
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect("/login");
+			
+			return false;
 		}
 		
 		return true;

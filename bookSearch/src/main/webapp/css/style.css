@@ -6,3 +6,7 @@ body.login {
 	padding-top: 40px;
 	background-color: #feeb34;
 }
+nav img {
+	-webkit-filter: brightness(0) invert(1);
+  	filter: brightness(0) invert(1);
+}

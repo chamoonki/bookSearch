@@ -41,6 +41,12 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		
+		<!-- RestFull API를 위한 Client 설정 -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+		
 		<!-- =========================== DataBase 관련  MVN =========================== -->
 		<!-- DB 관련 JPA 설정 -->
 		<dependency>
@@ -52,6 +58,12 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+		</dependency>
+		
+		<!-- Password Encryption -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
 		</dependency>
 		
 		<!-- =========================== Front-End 관련  MVN =========================== -->
