@@ -9,13 +9,14 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	   	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	   	
+	   	<script src="https://kit.fontawesome.com/e022ee3f50.js"></script>
 	   	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	   	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<!-- Top Division 부분 -->
-		<div style="background: #442c2a;color: white;padding: 21px 0px;">
+		<div class="top-header">
 			<div class="container">
 				<%@ include file="/include/top.jsp"%>
 				<!-- <h1>Book Search</h1> -->
@@ -35,9 +36,27 @@
 									</div>
 								</div>
 								<div class="col-lg-6">
-									<div class="form-group">
-										<label for="input-searchword">Search word</label>
-										<input id="input-searchword" class="form-control" name="keyword" placeholder="Enter search term.">
+									<label for="input-searchword">Search word</label>
+									<div class="input-group">
+										
+										<input id="input-searchword" class="form-control" name="keyword" placeholder="Enter search term." aria-label="Text input with dropdown button">
+										<div class="input-group-append">
+										    <button class="btn btn-outline-secondary dropdown-toggle popular" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    	<i class="fa fa-star"></i>
+										    </button>
+										    <div class="dropdown-menu">
+										    	<a class="dropdown-item disabled">Popular Keyword</a>
+										    	<div role="separator" class="dropdown-divider"></div>
+										    	<span class="dropdown-item disabled pop-no-data">
+										    		<img class="w-px-14" src="./assets/img/alert.svg">
+										    		 There are no popular keywords.
+										    	</span>
+										    	<div class="popular-data">
+										    		<a class="dropdown-item disabled w-px-12">1. Popular Keyword <span class="badge badge-success ml-2">9</span></a>
+										    	</div>
+										    	
+										    </div>
+										  </div>
 									</div>
 								</div>
 								<div class="col-lg-1">
@@ -45,7 +64,7 @@
 										<label>&nbsp;</label>
 										<div>
 											<button class="btn btn-primary" type="button" onClick="loadMore(1)">
-												<div class="spinner-border" role="status" style="width: 24px; height: 24px; display: none">
+												<div class="spinner-border search-loading" role="status" >
 												  <span class="sr-only">Loading...</span>
 												</div>
 												<span class="search-text">
@@ -66,32 +85,32 @@
 		
 		<!-- Main Contents Division 부분 -->
 		<div class="container">
-			<div class="row" style="padding-top: 20px;">
+			<div class="row pt-20">
 				<div class="col-lg-12">
 					<!-- portlet -->
-					<div style="padding: 0; border: 1px solid #e7ecf1 !important; background-color: #fff; margin-top: 0; margin-bottom: 25px;">
+					<div class="portlet">
 						<!-- title -->
-						<div style="padding: 15px 20px 10px; border-bottom: 1px solid #eef1f5; min-height: 70px; margin-bottom: 10px;">
-							<div style="color: #666; padding: 10px 0; float: left; display: inline-block; font-size: 25px; line-height: 18px;">
-								<span style="color: #2f353b !important; text-transform: uppercase !important; font-weight: 700 !important">
+						<div class="portlet-header" >
+							<div class="portlet-label">
+								<span class="portlet-title">
 									Book List
 								</span>
-								<span style="padding: 0; margin: 0; line-height: 13px; color: #9eacb4; font-size: 16px; font-weight: 400;">
+								<span class="portlet-title-desc">
 									You can view book information about what you search for.
 								</span>
 							</div>
 						</div>
 						<!-- body -->
 						<!-- 결과가 있을 때의 Body -->
-						<div style="padding: 10px 20px 20px; clear: both; display:none;" id="book_body"></div>
+						<div class="portlet-body" id="book_body"></div>
 						<!-- 결과가 없을 때의 Body -->
-						<div style="padding: 10px 20px 20px; clear: both;" id="book_no_body">
+						<div class="portlet-no-body" id="book_no_body">
 							<div class="conteiner">
 								<div class="row">
 									<div class="col-lg-12">
 										<div id="noResult" class="alert" style="text-align:center;">
-											<img src="./assets/img/alert.svg" style="width: 30px;">
-											Oops! No books have been searched. Please check again.
+											<img class="w-px-30" src="./assets/img/alert.svg">
+											 No books have been searched. Please check again.
 										</div>
 									</div>
 								</div>
@@ -101,12 +120,14 @@
 				</div>
 			</div>
 		</div>
+		<!-- Detail Modal -->
+		<%@ include file="/include/tpl/detail-modal.jsp"%>
 	</body>
 	
 	<script type="text/javascript" src="./js/utils.js"></script>
 	<script type="text/javascript">
 		var page = 1, inc = 0;
-		
+
 		// search_form 에 대해 Submit 버튼을 눌렀을 때 발생 하는 Event
 		$("#search_form").submit(function( event ) {
 			event.preventDefault();
@@ -155,21 +176,22 @@
 								// book Contents를 row에 append 해준다.
 								$("#book_body > .books" + (inc - 1)).append(
 									'<div class="col-lg-3">'+
-										'<div style="color:#fff; min-height: 250px; box-sizing: border-box;">'+
-							                '<div style="position: relative; box-sizing: border-box;">'+
-							                    '<img src="' + obj.thumbnail + '" style="height: 250px; width: 100%; vertical-align: middle; border: 0;"> </div>'+
-							                '<div style="width: 125px; position: absolute; right: 15px; top: 0; min-height: 250px; background: rgba(142,68,173,.8)!important">'+
-							                    '<div style="text-align: center; margin-top: 20px; padding: 10px; font-size: 12px;">'+ 
+										'<div class="book-card">'+
+							                '<div class="book-card-header">'+
+							                    '<img class="book-card-thumbnail" src="' + (obj.thumbnail ? obj.thumbnail : './assets/img/default-book.svg') + '"> </div>'+
+							                /* '<div style="width: 125px; position: absolute; right: 15px; top: 0; min-height: 250px; background: rgba(47,53,59,.8)!important">'+ */
+							                '<div class="book-card-body">'+
+							                    '<div class="body-title">'+ 
 													// Detail은 가져온 정보를 토대로 popup을 띄워 준다.
 						                    		'<a href="#" onclick="detailView(' + ((arr_isbn.length > 1) ? arr_isbn[1] : arr_isbn[0]) +')">'+
 							                    	(obj.title + ' | '+ obj.publisher) + 
 							                    	'</a>'+
 							                    '</div>'+
-							                    '<div style="text-align: left; padding-left: 5px; font-size: 11px;">저자: ' + obj.authors + '</div>'+
-							                    '<div style="text-align: left; padding-left: 5px; font-size: 11px;">번역: ' + obj.trans + '</div>'+
-							                    '<div style="text-align: left; padding-left: 5px; font-size: 11px;">상태: ' + obj.status + '</div>'+
-							                    '<div style="margin-top: 30px; padding-left: 5px; position: absolute; right: 0;">'+
-							                        '<button type="button" class="btn btn-circle btn-danger btn-sm" style="width: 90px;border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; border: none !important;">'+
+							                    '<div class="body-info">저자: ' + obj.authors + '</div>'+
+							                    '<div class="body-info">번역: ' + obj.trans + '</div>'+
+							                    '<div class="body-info">상태: ' + obj.status + '</div>'+
+							                    '<div class="body-bookmark">'+
+							                        '<button type="button" class="btn btn-circle btn-danger btn-sm">'+
 														'Bookmark'+
 							                        '</button>'+
 							                    '</div>'+
@@ -186,62 +208,6 @@
 									'<button class="btn btn-primary btn-lg btn-block" onclick="loadMore(); $(this).remove();"> Load More </button>'
 								);
 							}
-							/* $(jsonRes.documents).each(function(idx) {
-								console.log('######### = ', idx);
-								var authors = "", trans = "", thumbnail = "", isbn = "";
-
-								$(this.authors).each(function() {
-									authors += (this + " ")
-								});
-								$(this.translators).each(function() {
-									trans += (this + " ")
-								});
-
-								if (this.thumbnail) {
-									thumbnail = "<img src='"+this.thumbnail+"' width='100'>";
-								}
-
-								var arr_isbn = this.isbn.split(" ");
-								
-
-								if(arr_isbn.length>1){
-									isbn = arr_isbn[1];
-								}else{
-									isbn = arr_isbn[0];
-								}
-
-								html += "<li class='list-group-item'>";
-								html += "<dl><dt><a href='./detail?isbn="
-										+ isbn
-										+ "'>"
-										+ this.title
-										+ " | "
-										+ this.publisher
-										+ "</a>"
-										+" <button type='button' class='btn btn-primary btn-bookmark add' data-isbn='"+isbn+"'>북마크</button>"
-										+"</dt>";
-								html += "<dd><div class='left'>"
-										+ thumbnail
-										+ "</div><div class='right'>저자: "
-										+ authors
-										+ "<br> 번역자: "
-										+ trans
-										+ "<br> 상태: "
-										+ this.status
-										+ "</div></dd></dl></li>";
-											});
-							if (!jsonRes.meta.is_end) {
-								html += "<li><button class='btn btn-primary btn-lg btn-block' onclick='submitSearch("
-										+ (pg + 1)
-										+ "); $(this).parent().remove();'>더보기 </button></li>";
-							}
-							if (pg > 1) {
-								$("#books > ul").append(html);
-							} else {
-								$("#books > ul").html(html);
-							}
-						}
-						console.log(res); */
 						}
 					},	
 					function(err){	// error & fail
@@ -257,23 +223,46 @@
 			}
 		});
 
-		// Detail View를 보여주기 위한 함수
-		function detailView(isbn){
-			console.log('##################!!!!! = ', isbn);
-			ajaxHelper(
-				// ajax info
-				{url:"/detailView", method: "GET", data: {isbn: isbn}},
-				function(){	// beforeSend
+		// 인기 검색어 관련 버튼을 클릭 했을 때
+		$(".popular").click(function(){
+			// 인기 검색 키워드를 가져 온다.
+			ajaxHelper({url : "/popular", method: "GET", data : {}},
+				function(){	// beforeSend	
 				},
 				function(res){	// success
-					console.log('######### = ', res);
-				},	
-				function(){	// error & fail
+					var popular = res.popular;
+
+					$(".popular-data").html("");
+					// Data가 있는지 판단 한다.
+					if(popular.length > 0){
+						$(".pop-no-data").hide();
+
+						popular.forEach(function(item, idx){	
+							$(".popular-data").append(
+								'<a class="dropdown-item fs-12" href="#" onclick="popularSearch(\'' + item[0] + '\')">'+
+									'<span>' + (idx+1) + '. ' + item[0] + '</span>'+
+									'<span class="badge badge-success ml-2 popular-badge">' + item[1] + '</span>'+
+								'</a>'
+							);
+						});
+						
+					}else{	// Data가 없다면 데이터 없다는 문구를 띄워 준다.
+						$(".pop-no-data").show();
+					}
+				},
+				function(err){	// error & fail
 				},
 				function(){	// complete
-					
 				}
-			);	
+			);
+		});
+
+		// 인기 검색어에서 검색어를 클릭 했을 때 해당 키워드로 검색하도록 하는 함수.
+		function popularSearch(keyword) {
+			$('#input-searchword').val(keyword);
+
+			// BookSearch 호출
+			$('#search_form').submit();
 		}
 
 		// LoadMore 버튼을 클릭 했을 때 들어 오는 함수.
@@ -296,7 +285,6 @@
 				inc = 0;
 			}
 				
-			
 			if(type){
 				// 페이지를 다시 1로 만들어 준다.
 				page = 1;

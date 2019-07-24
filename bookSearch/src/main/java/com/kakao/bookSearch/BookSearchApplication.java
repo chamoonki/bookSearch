@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @ComponentScan
 @Configuration
@@ -30,4 +31,10 @@ public class BookSearchApplication {
         resolver.setSuffix(".jsp");
         return resolver;
     }
+	
+	@Bean
+    MappingJackson2JsonView jsonView(){
+        return new MappingJackson2JsonView();
+    }
+
 }

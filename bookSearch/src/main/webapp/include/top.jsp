@@ -5,7 +5,7 @@
 		<h1>Book Search</h1>
 	</a>
 	<a class="col"></a>
-	<a class="btn text-warning col-lg-1 text-right" href="/searchHistory">
+	<a class="btn text-warning col-lg-1 text-right" href="/history">
 		<img src="./assets/img/history.svg" class="img-responsive nav-icon" style="width:32px;" data-toggle="tooltip" data-placement="bottom" title="Search History">
 	</a>
 	<!-- book mark 영역 -->

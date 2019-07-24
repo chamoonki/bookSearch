@@ -45,21 +45,26 @@
 						    <span aria-hidden="true">&times;</span>
 						  </button>
 						</div>
-			          	<%-- <div class="error-message alert text-danger ${resultCode}" style="">계정정보가 정확하지 않습니다. 다시 입력해주세요.</div> --%>
 			          	
 			          	<!-- 로그인 & 회원가입 버튼 -->
 						<div class="row">
 							<div class="col-lg-12" align="center">
-								<button class="btn btn-lg btn-outline-primary" type="submit">Login </button>
+								<button class="btn btn-lg btn-outline-primary m-0-44" type="submit">Login </button>
 								<button class="btn btn-lg btn-outline-info" id="membership" type="button">membership</button>
 							</div>
 						</div>
 						
-						<hr>
-						<ul class="list-group text-muted">
-						    <li class="list-group-item">👀 <strong>처음 사용자</strong>는 계정과 패스워드를 입력하고 로그인 하시면됩니다.</li>
-						    <li class="list-group-item">👀 <strong> 기존 사용자</strong>는 처음에 입력하신 계정과 패스워드를 입력하고 로그인 하시면됩니다.</li>
-						</ul>
+						<!-- <hr> -->
+						<div class="row pt-55">
+							<div class="col-lg-12 txt-align-c">
+								<img class="w-px-25" src="./assets/img/question.svg">
+								<span>Login을 하기 전에 먼저 <strong>회원 가입</strong>을 진행해 주세요.</span>
+							</div>
+							<div class="col-lg-12 txt-align-c">
+								<img class="w-px-25" src="./assets/img/question.svg">
+								<span>회원 가입을 완료 하셨으면 ID&Password를 입력하여<strong> 로그인</strong>을 하세요.</span>
+							</div>
+						</div>
 			        </form>
 				</div>
 			</div>

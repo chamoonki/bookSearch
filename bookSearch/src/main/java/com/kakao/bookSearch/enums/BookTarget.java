@@ -7,8 +7,13 @@ package com.kakao.bookSearch.enums;
  *
  */
 public enum BookTarget {
-	전체("전체", "all"), 제목("제목", "title"), ISBN("ISBN", "isbn"), 주제어("주제어", "keyword"), 목차("목차", "contents"), 책소개("책소개",
-			"overview"), 출판사("출판사", "publisher");
+	All("All", "all"), 
+	Title("Title", "title"), 
+	ISBN("ISBN", "isbn"), 
+	Keyword("Keyword", "keyword"), 
+	Contents("Contents", "contents"), 
+	Overview("Overview", "overview"), 
+	Publisher("Publisher", "publisher");
 	
 	private String title;
 	private String code;

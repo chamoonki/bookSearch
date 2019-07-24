@@ -33,12 +33,12 @@ public class RouterInterceptor extends HandlerInterceptorAdapter {
 		// session 의 값이 있을 경우
 		//if(request.getSession(false) != null && session.getAttribute("account") != null) {			
 		if(request.getSession(false) != null && session.getAttribute("account") != null) {
-			System.out.println("@@@@@@@@@@@ = session 확인 + " + session.getAttribute("account"));				
+			logger.info("##### [Session Check] => " + session.getAttribute("account"));
 			// Account를 확인 한다.
 			//return true;
 			
 		}else {
-			System.out.println("@@@@@@@@@@@ = session 없음 ");			
+			logger.warn("##### [Session Check] => No Session Data");
 			// login Page로 돌려 준다.
 			response.sendRedirect("/login");
 			
